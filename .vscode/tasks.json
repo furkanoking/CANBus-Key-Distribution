@@ -1,0 +1,19 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "CMake Build",
+      "type": "shell",
+      "command": "if [ -f /.dockerenv ]; then P=container; else P=vscode; fi; cmake --preset $P && cmake --build --preset $P",
+      "group": { "kind": "build", "isDefault": true },
+      "problemMatcher": ["$gcc"]
+    },
+    {
+      "label": "Run Tests",
+      "type": "shell",
+      "command": "if [ -f /.dockerenv ]; then P=container; else P=vscode; fi; cmake --preset $P && cmake --build --preset $P && ctest --preset $P",
+      "group": "test",
+      "problemMatcher": ["$gcc"]
+    }
+  ]
+}

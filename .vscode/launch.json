@@ -1,0 +1,27 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Container: Calistir (demo)",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/build-linux/cankeydist",
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "MIMode": "gdb",
+      "preLaunchTask": "CMake Build"
+    },
+    {
+      "name": "Mac: Calistir (demo)",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/build/cankeydist",
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "MIMode": "lldb",
+      "preLaunchTask": "CMake Build"
+    }
+  ]
+}

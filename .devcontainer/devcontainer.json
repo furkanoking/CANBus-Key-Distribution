@@ -1,0 +1,17 @@
+{
+  "name": "Antigravity-CANXLKeyDistribution",
+  "image": "antigravity:latest",
+  "workspaceFolder": "/workspaces/CANXLKeyDistributionNewVersion",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/CANXLKeyDistributionNewVersion,type=bind",
+  "remoteUser": "root",
+  "init": true,
+  "overrideCommand": true,
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.cpptools",
+        "ms-vscode.cmake-tools"
+      ]
+    }
+  }
+}
