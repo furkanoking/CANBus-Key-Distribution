@@ -23,7 +23,7 @@ sequenceDiagram
     E->>M: 5. ACK = proof tag (K_S never sent)
     M->>M: 6. verify tag + freshness → confirm ECU
     Note over M: timeout? → retry missing ECUs (max 3) → abort
-    M->>M: 7. all confirmed → fire callback
+    M->>E: 7. all confirmed → fire callback
 ```
 
 | # | What happens | Function in this code |
