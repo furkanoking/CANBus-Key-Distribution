@@ -105,6 +105,31 @@ the charts can show **min / mean / max** — capturing system-level jitter
 desktop CPU with AES-NI: **relative** and **scaling** results are meaningful;
 absolute `Tcomp` would have to be measured on the target HSM.
 
+### Table 1 — Per-operation cost (20 repetitions × 30k iterations each)
+
+| Operation | Min (µs) | Mean (µs) | Max (µs) | Std dev (µs) |
+|-----------|---------:|----------:|---------:|-------------:|
+| KBKDF (K_S derive) | 2.02 | 2.28 | 2.63 | 0.25 |
+| HKDF (K_S derive)  | 2.39 | 2.65 | 3.00 | 0.20 |
+| SHA-256 (K_S_hash) | 0.26 | 0.27 | 0.28 | 0.01 |
+| HMAC tag generate  | 1.67 | 1.88 | 2.02 | 0.11 |
+| Tag verify         | 1.79 | 2.00 | 2.23 | 0.14 |
+| **Tcomp (KBKDF + tag)** | **3.69** | **4.16** | **4.65** | **0.27** |
+| **Tcomp (HKDF + tag)**  | **4.06** | **4.53** | **5.02** | **0.23** |
+
+### Table 2 — Scenario scaling (10 repetitions each)
+
+| N (ECUs) | Best min / mean / max (µs) | Worst min / mean / max (µs) | Best msgs | Worst msgs |
+|---------:|:--------------------------:|:---------------------------:|----------:|-----------:|
+| 1   | 3.7 / 4.2 / 6.7      | 9.7 / 11.1 / 12.0       | 3   | 6   |
+| 10  | 20.4 / 22.2 / 25.0   | 77.8 / 83.2 / 88.5      | 12  | 42  |
+| 50  | 88.3 / 93.3 / 96.5   | 361.7 / 369.1 / 378.5   | 52  | 202 |
+| 100 | 180.0 / 205.7 / 229.3| 727.3 / 798.2 / 881.4   | 102 | 402 |
+| 200 | 369.1 / 402.4 / 425.7| 1448.9 / 1594.8 / 1713.3| 202 | 802 |
+
+> Sample run on a desktop CPU (AES-NI). Regenerate with the commands at the
+> bottom of this section — the charts below visualize these same numbers.
+
 **Per-operation cost** — each crypto step measured separately:
 
 ![Per-operation cost](docs/images/operations.png)
