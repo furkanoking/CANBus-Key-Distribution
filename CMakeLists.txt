@@ -26,3 +26,12 @@ target_link_libraries(cankeydist_test PRIVATE cankeydist_lib)
 
 enable_testing()
 add_test(NAME keydist_tests COMMAND cankeydist_test)
+
+# Benchmark calistirilabilirleri (ayri dosyalar)
+add_executable(cankeydist_bench_ops bench/bench_operations.cpp)
+target_include_directories(cankeydist_bench_ops PRIVATE bench)
+target_link_libraries(cankeydist_bench_ops PRIVATE cankeydist_lib)
+
+add_executable(cankeydist_bench_scenarios bench/bench_scenarios.cpp)
+target_include_directories(cankeydist_bench_scenarios PRIVATE bench)
+target_link_libraries(cankeydist_bench_scenarios PRIVATE cankeydist_lib)

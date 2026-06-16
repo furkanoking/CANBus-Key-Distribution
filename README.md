@@ -93,3 +93,38 @@ ctest --preset container
 ```
 
 Requires **OpenSSL ≥ 3.0** (for the `EVP_KDF` KBKDF/HKDF API) and CMake ≥ 3.20.
+
+---
+
+## Benchmarks
+
+Timed with `std::chrono::steady_clock`. Each operation runs in a batch of tens
+of thousands of calls (with warm-up), and the whole batch is **repeated 20×** so
+the charts can show **min / mean / max** — capturing system-level jitter
+(frequency scaling, scheduling), not just a single average. Numbers are from a
+desktop CPU with AES-NI: **relative** and **scaling** results are meaningful;
+absolute `Tcomp` would have to be measured on the target HSM.
+
+**Per-operation cost** — each crypto step measured separately:
+
+![Per-operation cost](docs/images/operations.png)
+
+**Tcomp (one ECU's work = KDF + HMAC tag)** — KBKDF is the default and also the
+cheaper KDF here:
+
+![KBKDF vs HKDF](docs/images/tcomp.png)
+
+**Scaling with N** — the Master's cost grows linearly (`O(N)`); worst case
+(≤ 3 retries per ECU) is ~4× best case:
+
+![Scaling with N](docs/images/scaling.png)
+
+Reproduce:
+
+```bash
+cmake -S . -B build-release -DCMAKE_BUILD_TYPE=Release -G Ninja
+cmake --build build-release
+./build-release/cankeydist_bench_ops       --csv > docs/data/operations.csv
+./build-release/cankeydist_bench_scenarios --csv > docs/data/scenarios.csv
+python3 scripts/plot_benchmarks.py          # writes docs/images/*.png
+```
