@@ -4,3 +4,4 @@ build-release/
 .cache/
 .DS_Store
 __pycache__/
+docs/
